@@ -1,5 +1,4 @@
-# German-power-market 
-German power market analysis (Trading Strat, ML, BESS optimization)
+# German power market analysis (Trading Strat, ML, BESS optimization)
 
 This repository contains projects related to:
 - Battery dispatch optimization
