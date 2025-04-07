@@ -1,4 +1,4 @@
-# German-power-market (Landing a Junior Power Quant/Trader role)
+# German-power-market 
 German power market analysis (Trading Strat, ML, BESS optimization)
 
 This repository contains projects related to:
