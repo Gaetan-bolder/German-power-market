@@ -1,54 +1,105 @@
-# Python script focusing on German power market (2024 period) and NWE gas (2023 & 2024 period)
+# Quant Strategies in the EU Power & Gas Markets
 
-This repository contains projects related to:
-- Germany grid/dunkelfaute analysis (when it appends, how the DA,CID and IP markets are impacted during this period)
-  
-- X-border arbitrage strategy between DE and neighboring countries using Markov chain modeling & Reinforcemnt learning (Q-Learning) - not optimized.
-Output = Cumul PnL RL Strategy: €15,616,663.00 & Manual Strategy: €18,258,046.00
+Focus: German Power Market (2024) & NWE Gas Market (2023–2024)
+This repository contains a full suite of market analysis and algorithmic trading strategies for the EU energy landscape. The work includes realistic market modeling, forecasting, regime detection, and trading simulations — tailored for interview or production-level use:
 
-- X-border arbitrage strategy focusing on negative price between DE and neighboring countries. Use of LightGBM model to classify possible DA negative price in DE and then use this classification for arbitrage.
-Output = very good classification model : Poland €115785038.86; Switzerland €111378268.64; Austria €111004214.50, France €14948026.98 etc etc
+1. 🇩🇪 Germany Grid & Dunkelflaute Analysis
+- Identification of Dunkelflaute periods (low renewable production).
+- Impact analysis on Day-Ahead (DA), Continuous Intraday (CID), and Imbalance Prices (IP).
+- Volatility comparison between normal and Dunkelflaute periods.
 
-- Renewable analysis (negative power price, duck curve, power split)
+2. 🌍 Cross-Border Arbitrage Strategy – Markov Chain + Q-Learning
+- Arbitrage between Germany and 10 neighboring countries.
+- Markov modeling of price regimes (Germany vs Neighbor).
+- Reinforcement Learning (Q-Learning) vs Manual strategy.
+PnL Output:
+RL Strategy: €15,616,663.00
+Manual Strategy: €18,258,046.00
 
-- Wholesale market analysis using Kaufman’s Adaptive Moving Average (KAMA) for DA, CID and IP DE markets using Slope strategy and dual KAMA strategy.
-  
-- Germany DA power prices forecasting using LSTM model (training set from Jan to Nov/24 - test set Dec/24). Created two strategies base on prediction vs reality:
-1st directional view
-2nd optuna optimization using Vol and Cost constraints.
+3. 🧠 Negative Price Arbitrage with Machine Learning (LightGBM)
+- Predict negative DA price in Germany.
+- Execute X-border arbitrage if foreign price > DE + cost.
+- Classification Model Output:
+Poland: €115,785,038.86
+Switzerland: €111,378,268.64
+Austria: €111,004,214.50
+France: €14,948,026.98
 
-- Germany arbitrage between DA–CID spread prediction strategy using LightGBM model classifier.
-Output : For a flow of 20MWh - The total cumulative PnL is €2,377,913.00
+4. 🔋 Renewable Analysis
+- Negative price dynamics driven by solar/wind saturation.
+- Duck curve visualizations (load net of RES).
+- Correlation of solar output and price by season.
 
-- Imbalance system analysis (long vs short system) - IP vs DA & CID markets.
-  
-- PCA analysis on IP
-Output : The first four principal components explain 88.63% of the variance.
+5. 📊 DA, CID, IP – Volatility Strategy (KAMA)
+- Use Kaufman’s Adaptive Moving Average (KAMA) for smoother trend detection.
+- Two strategies:
+Slope-based directional signal
+Dual KAMA crossover
+- Applied to DA, CID, and IP power markets.
 
-- Trading strategies base on Kmeans & GMM regimes clustering base on the spread between IP and DA markets:
-1st Profitable Regime Only (Profit Cluster Strategy)
-If cluster = profitable and Spread (IP - DA) > 0 → Buy (+1)
-If cluster = profitable and Spread (IP - DA) < 0 → Sell (-1)
-Else → No trade (0)
-2nd Regime Switcher Based on Volatility
-If Low-Volatility Cluster:Trade with momentum:Buy if Spread > 0, Sell if Spread < 0
-If High-Volatility Cluster:Trade with mean reversion:Sell if Spread > 0, Buy if Spread < 0
-Else → No trade (0)
-Output : Lowest PnL is €140k and highest is 1.5Mio.
+6. 🔮 LSTM Load Forecast + Prediction Trading
+- Train-test split (Jan–Nov = train, Dec = test).
+- Strategy 1: Directional forecast (buy/sell DA).
+- Strategy 2: Optuna-based signal optimization (volatility/cost adjusted).
 
-- BESS optimization for CID and IDA markets with real parameters (charge/discharge efficiency, time limit, limited cycle per day, trading fee "illiquid market cost", Max capacity, Minimun spread to enter the trade, battery degradation cost)
-Output : Manual optimization base on specific spread (no future cheating) PnL €8,559,084.47 for 1 year; PnL Reinforcement learning base on deep Q-network (DQN) for 5 months is max €700K.
+7. 🧠 LightGBM Classifier for DA–CID Spread
+- Predict DA–CID price spread for arbitrage.
+- Trade if prediction > cost.
+Output:
+Flow: 20 MWh
+Total Cumulative PnL: €2,377,913.00
 
-- Optimization of power sell strategy for power plant "rebalacing excess of power generation" - either buy using TWAPs (TWAP 10-min, TWAP 20-min) or via XGboost model optimization for the DE CID market.
-Output : TWAP 10-min Total PnL: €239,823.10; TWAP 20-min Total PnL: €261,165.00; XGBoost ML Strategy Total PnL: €434,167.20
+8. ⚖️ Imbalance System Analysis
+- Germany long/short system classification.
+- Analyze IP vs DA/CID in stressed systems.
 
-- Gas market analysis : analysis when TTF gas price face a shock (positive or negative base on storage levels limit, geopolitical events, Extreme weather, or LNG flows) base on Yang-Zhang Volatility for accurate shock detection based on recent volatility patterns (20 days MA for 2std dev signal). After a shock, the next day saw usually a positive average return and the second day after a shock a negative return.
-  
-- Gas vs renewable power generation correlation and finding trading signal --- working on it--
+9. 📉 PCA on Imbalance Prices
+- Principal Component Analysis on IP price behavior.
+Result: First 4 components explain 88.63% of total variance.
 
+10. 🔁 Regime-Based Trading (KMeans + GMM Clustering)
+- Cluster market regimes using PCA of DA–IP spreads.
+- Two strategies:
+Profitable Regime Only
+Regime Switcher (Momentum in Low Vol, Mean-Reversion in High Vol)
+PnL Range: €140k → €1.5M+
 
-All these strats have quite realistic market behaviors/limitations. 
+11. 🔋 BESS Optimization (Battery Strategy for CID & IDA)
+- Constraints modeled: Efficiency, cycles/day, degradation, spread filter, capacity
+- Two strategies:
+Manual spread optimization
+Deep Q-Network (DQN) RL Agent
+PnL Output:
+Manual (1 year): €8,559,084.47
+DQN (4 months): €700,000
 
+12. ⚙️ Power Sell Strategy (Rebalancing for Power Plant)
+- Strategies for excess power:
+- TWAP (10-min, 20-min)
+- XGBoost optimization
+Output:
+TWAP 10-min: €239,823.10
+TWAP 20-min: €261,165.00
+XGBoost: €434,167.20
 
-This repo is for practice only on EU power/gas market. 
+13. 🔥 Gas Shock Detection Strategy (TTF)
+- Use Yang-Zhang Volatility (robust to jumps).
+- Detect shocks based on storage limits, LNG, geopolitics.
+- Backtest post-shock behavior:
+Day 1 = up
+Day 2 = reversion
+
+14. 🔄 Gas–Renewable Correlation & Signal (In Progress)
+- Investigate correlation between TTF gas and solar/wind generation.
+- Build trigger logic for trading signals on price/fundamentals dislocation.
+
+🛠️ Tools & Frameworks Used
+- Python: pandas, numpy, LightGBM, XGBoost, scikit-learn, Optuna, LSTM, Keras, PyTorch, Seaborn, Matplotlib
+- Machine learning: classification, regression, clustering
+- RL: Q-Learning, Deep Q-Networks (DQN)
+- Power market modeling: flow constraints, cost filters, renewable dynamics
+
+📌 NOTE
+- All strategies are simulation-only, based on real market structure and behavior.
+- This repo is for educational and interview preparation purposes (esp. quant & energy trading roles).
 
