@@ -1,7 +1,7 @@
 # Quant Strategies in the EU Power & Gas Markets
 
 Focus: German Power Market (2024) & NWE Gas Market (2023–2024)
-This repository contains a full suite of market analysis and algorithmic trading strategies for the EU energy landscape. The work includes realistic market modeling, forecasting, regime detection, and trading simulations — tailored for interview or production-level use:
+This repository contains a full suite of market analysis and algorithmic trading strategies for the EU energy landscape. The work includes realistic market modeling, forecasting, regime detection, and trading simulations — tailored for interview use:
 
 1. 🇩🇪 Germany Grid & Dunkelflaute Analysis
 - Identification of Dunkelflaute periods (low renewable production).
