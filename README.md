@@ -20,9 +20,9 @@ Manual Strategy: €18,258,046.00
 - Predict negative DA price in Germany.
 - Execute X-border arbitrage if foreign price > DE + cost.
 - Classification Model Output:
-Poland: €115,785,038.86
-Switzerland: €111,378,268.64
-Austria: €111,004,214.50
+Poland: €15,785,038.86
+Switzerland: €11,378,268.64
+Austria: €11,004,214.50
 France: €14,948,026.98
 
 4. 🔋 Renewable Analysis
