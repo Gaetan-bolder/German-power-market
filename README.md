@@ -33,21 +33,21 @@ France: €14,948,026.98
 5. 📊 DA, CID, IP – Volatility Strategy (KAMA)
 - Use Kaufman’s Adaptive Moving Average (KAMA) for smoother trend detection.
 - Two strategies:
-Slope-based directional signal
-Dual KAMA crossover
-- Applied to DA, CID, and IP power markets.
+Slope-based directional signal (1 day)
+Dual KAMA crossover (1 vs 10 days slopes)
+- Applied to DA, CID, and IP power markets (80%+ hit ratio)
 
 6. 🔮 LSTM Load Forecast + Prediction Trading
-- Train-test split (Jan–Nov = train, Dec = test).
-- Strategy 1: Directional forecast (buy/sell DA).
-- Strategy 2: Optuna-based signal optimization (volatility/cost adjusted).
+- Train-test split (Jan–Nov = train, Dec = test) result = RMSE:  10.60 €/MWh; MAE:   8.43 €/MWh; MdAE:  7.21 €/MWh
+- Strategy 1: Directional forecast =) buy/sell DA base on my forecast - can be used to trade DA future market =) 1 year PnL is 5Mio.
+- Strategy 2: Optuna-based signal optimization (volatility/cost adjusted) - need to tune a bit more the details
 
 7. 🧠 LightGBM Classifier for DA–CID Spread
 - Predict DA–CID price spread for arbitrage.
 - Trade if prediction > cost.
 Output:
 Flow: 20 MWh
-Total Cumulative PnL: €2,377,913.00
+Total Cumulative PnL 1Y: €2.3Mio
 
 8. ⚖️ Imbalance System Analysis
 - Germany long/short system classification.
@@ -55,16 +55,23 @@ Total Cumulative PnL: €2,377,913.00
 
 9. 📉 PCA on Imbalance Prices
 - Principal Component Analysis on IP price behavior.
-Result: First 4 components explain 88.63% of total variance.
+Result: First 4 components explain 88.36% of total variance - which is great as a source of indicators
 
-10. 🔁 Regime-Based Trading (KMeans + GMM Clustering)
+10. 🔁 Regime-Based Trading (DBSCAN + KMeans + GMM Clustering)
 - Cluster market regimes using PCA of DA–IP spreads.
 - Two strategies:
 Profitable Regime Only
 Regime Switcher (Momentum in Low Vol, Mean-Reversion in High Vol)
-PnL Range: €140k → €1.5M+
+PnL Range: €14k → €1.5M+
 
-11. 🔋 BESS Optimization (Battery Strategy for CID & IDA)
+11. 🛠️ German and neighboring countries outages impact on CID & IP markets price for Q1 & Q2 2024
+-   Determine the number of "Planned" and "Forced" outages and their relative percentages
+-   Analyze how outages impact CID and IP prices/vol using distribution
+-   Determine how much vol is created on both markets when a Forced outages is live
+Enters a buy in the CID market at the start of a forced outage
+Exits the position by selling in the IP market at various time offsets (profitable up to 200 minutes). 
+
+12. 🔋 BESS Optimization (Battery Strategy for CID & IDA)
 - Constraints modeled: Efficiency, cycles/day, degradation, spread filter, capacity
 - Two strategies:
 Manual spread optimization
@@ -73,7 +80,7 @@ PnL Output:
 Manual (1 year): €8,559,084.47
 DQN (4 months): €700,000
 
-12. ⚙️ Power Sell Strategy (Rebalancing for Power Plant)
+13. ⚙️ Power Sell Strategy (Rebalancing for Power Plant)
 - Strategies for excess power:
 - TWAP (10-min, 20-min)
 - XGBoost optimization
@@ -82,14 +89,14 @@ TWAP 10-min: €239,823.10
 TWAP 20-min: €261,165.00
 XGBoost: €434,167.20
 
-13. 🔥 Gas Shock Detection Strategy (TTF)
+14. 🔥 Gas Shock Detection Strategy (TTF)
 - Use Yang-Zhang Volatility (robust to jumps).
 - Detect shocks based on storage limits, LNG, geopolitics.
 - Backtest post-shock behavior:
 Day 1 = up
 Day 2 = reversion
 
-14. 🔄 Gas–Renewable Correlation & Signal (In Progress)
+15. 🔄 Gas–Renewable Correlation & Signal (In Progress)
 - Investigate correlation between TTF gas and solar/wind generation.
 - Build trigger logic for trading signals on price/fundamentals dislocation.
 
